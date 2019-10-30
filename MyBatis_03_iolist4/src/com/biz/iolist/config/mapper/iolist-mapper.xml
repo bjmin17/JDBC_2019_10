@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.biz.iolist.dao.IolistDao">
+	<select id="selectAll" resultType="iolistDTO">
+			SELECT IO_SEQ,
+					IO_DATE,
+					IO_INOUT,
+					IO_QTY,
+					IO_PRICE,
+					IO_TOTAL,
+					IO_PCODE,
+					IO_DCODE
+			FROM tbl_iolist
+	</select>
+	
+	<select id="findById" resultType="iolistDTO">
+			SELECT IO_SEQ,
+					IO_DATE,
+					IO_INOUT,
+					IO_QTY,
+					IO_PRICE,
+					IO_TOTAL,
+					IO_PCODE,
+					IO_DCODE
+			FROM tbl_iolist
+			WHERE IO_SEQ = #{io_seq}
+	
+	</select>
+	<select id="findByPCode" resultType="iolistDTO">
+			SELECT IO_SEQ,
+					IO_DATE,
+					IO_INOUT,
+					IO_QTY,
+					IO_PRICE,
+					IO_TOTAL,
+					IO_PCODE,
+					IO_DCODE
+			FROM tbl_iolist
+			WHERE IO_PCODE = #{io_pcode}
+	
+	</select>
+	<insert id="insert" parameterType="iolistDTO">
+		INSERT INTO tbl_iolist(IO_SEQ,
+					IO_DATE,
+					IO_INOUT,
+					IO_QTY,
+					IO_PRICE,
+					IO_TOTAL,
+					IO_PCODE,
+					IO_DCODE
+		) VALUES (SEQ_IOLIST.NEXTVAL,
+			#{io_date,jdbcType=VARCHAR},
+			#{io_inout,jdbcType=VARCHAR},
+			#{io_qty,jdbcType=VARCHAR},
+			#{io_price,jdbcType=VARCHAR},
+			#{io_total,jdbcType=VARCHAR},
+			#{io_pcode,jdbcType=VARCHAR},
+			#{io_dcode,jdbcType=VARCHAR})		
+ 	</insert>
+	<update id="update">
+		UPDATE tbl_iolist SET
+					IO_DATE = #{io_date},
+					IO_INOUT = #{io_inout},
+					IO_QTY = #{io_qty},
+					IO_PRICE = #{io_price},
+					IO_TOTAL = #{io_total},
+					IO_PCODE = #{io_pcode},
+					IO_DCODE = #{io_dcode}
+		WHERE IO_SEQ = #{io_seq}
+	
+	</update>
+	
+	<delete id="delete">
+	
+		DELETE FROM tbl_iolist WHERE IO_SEQ = #{io_seq}
+	
+	
+	</delete>
+	
+ 	
+ 	
+ 
+ </mapper> 
