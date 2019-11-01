@@ -8,7 +8,6 @@ import com.biz.rent.service.rent.RentServiceV2;
 
 public class BookServiceV2 extends BookServiceV1{
 
-	RentServiceV2 rentService = new RentServiceV2();
 	
 	@Override
 	protected void insert() {
@@ -111,15 +110,20 @@ public class BookServiceV2 extends BookServiceV1{
 		}
 		
 		while(true) {
-			System.out.println("YYYYMMDD");
+			System.out.println("YYYY");
 			System.out.print("등록할 출판연도 입력(-Q:quit) >> ");
 			
 			String strBYear = scanner.nextLine();
 			if(strBYear.equals("-Q")) break;
+			if(strBYear.length() != 4) {
+				System.out.println("4글자로 입력");
+				continue;
+			}
 
 			try {
 				int intYear = Integer.valueOf(strBYear);
 				bookDTO.setB_year(intYear);
+				
 			} catch (Exception e) {
 				System.out.println("숫자만 입력해주세요");
 			}
@@ -159,20 +163,17 @@ public class BookServiceV2 extends BookServiceV1{
 			break;
 		}
 		
-		while(true) {
 			System.out.println("도서 대여여부");
 			RentDTO rentDTO = rentDao.findByBCode(bookDTO.getB_code());
 			if(rentDTO == null) {
 				System.out.println("도서코드가 존재하지 않음");
-				continue;
+			} else {
+				if(rentDTO.getRent_retur_yn() == null) {
+					System.out.println("대출중인 도서입니다");
+				}
 			}
-			if(rentDTO.getRent_retur_yn() == null) {
-				System.out.println("대출중인 도서입니다");
-				break;
-			}
+			
 				
-			break;
-		}
 		int ret = bookDao.insert(bookDTO);
 		if(ret > 0) System.out.println("도서정보 추가 완료");
 		else System.out.println("도서정보 추가 실패");
