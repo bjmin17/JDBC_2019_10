@@ -36,16 +36,16 @@ public class RentServiceV1 {
 			System.out.println("=======================================");
 			System.out.println("도서 대출 관리 V1");
 			System.out.println("=======================================");
-			System.out.println("1.등록 2.수정 3.삭제 4.검색 0.종료");
+			System.out.println("1.등록 2.반납 3.삭제 4.검색 0.종료");
 			System.out.println("---------------------------------------");
 			System.out.print("업무선택 >> ");
 			String strMenu = scanner.nextLine();
-
+			
 			int intMenu = -1;
 			try {
 				intMenu = Integer.valueOf(strMenu);
 			} catch (Exception e) {
-				e.printStackTrace();
+				continue;
 			}
 			if(intMenu == 0) break;
 			else if(intMenu==1) this.insert();

@@ -175,13 +175,5 @@ public class MemoServiceV1 {
 		int ret = memoDao.insert(memoDTO);
 		if(ret > 0) System.out.println("메모 등록 완료");
 		else System.out.println("메모 등록 실패");
-		
-		
-		
-		
 	}
-	
-	
-	
-	
 }

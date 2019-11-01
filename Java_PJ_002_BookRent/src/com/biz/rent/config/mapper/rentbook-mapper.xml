@@ -39,7 +39,7 @@
 			RENT_RETUR_YN,
 			RENT_POINT
 		FROM tbl_rent_book
-		WHERE RENT_BCODE = #{rent_bcode} AND RENT_RETUR_YN = 'N'
+		WHERE RENT_BCODE = #{rent_bcode} AND RENT_RETUR_YN IS NULL
  	
  	</select>
  	
