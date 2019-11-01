@@ -68,9 +68,6 @@
 					RENT_POINT = #{rent_point},
  				RENT_RETUR_YN = #{rent_retur_yn}
  		WHERE RENT_SEQ = #{rent_seq}
- 		
- 		
- 		
  	</update>
  	<delete id="delete" parameterType="RentDTO">
  	</delete>

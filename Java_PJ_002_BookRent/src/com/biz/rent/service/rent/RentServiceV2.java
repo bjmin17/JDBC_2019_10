@@ -228,12 +228,12 @@ public class RentServiceV2 extends RentServiceV1{
 			
 			if(diff > 0) {
 				// 1 이상이면 반납일 이후에 반납, 지연반납
-				System.out.println("지연반납 diff" + diff);
-				System.out.println("지연반납");
+//				System.out.println("지연반납 diff" + diff);
+//				System.out.println("지연반납");
 			} else {
 				// 0이거나 0보다 작으면 기간 내 반납, 정상반납
-				System.out.println("정상반납 diff" + diff);
-				System.out.println("정상반납");
+//				System.out.println("정상반납 diff" + diff);
+//				System.out.println("정상반납");
 				int point = rentDTO.getRent_point();
 				point += 5;
 				rentDTO.setRent_point(point);
