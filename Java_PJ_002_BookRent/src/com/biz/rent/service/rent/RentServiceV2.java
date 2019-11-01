@@ -15,6 +15,14 @@ public class RentServiceV2 extends RentServiceV1{
 
 	protected BookServiceV3 bookService = new BookServiceV3();
 	protected UserServiceV3 userService = new UserServiceV3();
+	
+	String rent_date;
+	String rent_due_date;
+	
+	public RentServiceV2() {
+		rent_date = null;
+		rent_due_date = null;
+	}
 	@Override
 	protected void insert() {
 		System.out.println();
@@ -32,6 +40,7 @@ public class RentServiceV2 extends RentServiceV1{
 		Date date = new Date();
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 		String strCurDate = sf.format(date);
+		String rent_date = strCurDate;
 		rentDTO.setRent_date(strCurDate);
 		
 		// 현재(시스템 날짜) 에서 14일 후 날짜 구하기
@@ -44,6 +53,7 @@ public class RentServiceV2 extends RentServiceV1{
 		LocalDate localDate = LocalDate.now();
 		localDate = localDate.plusDays(14);
 		strCurDate = localDate.toString();
+		String rent_due_date = strCurDate;
 		rentDTO.setRent_return_date(strCurDate);
 //		String rent_due_date = "2019-10-30";
 //		String rent_date = "2019-10-31";
@@ -81,16 +91,8 @@ public class RentServiceV2 extends RentServiceV1{
 				
 				System.out.print("도서코드 입력 >> ");
 				String strBCode = scanner.nextLine();
-				// 수정할부분
-//				RentDTO rDTO = rentDao.findByBCode(strBCode);
-//				if(rDTO == null) {
-//					System.out.println("빌려간 도서코드 입니다");
-//					break;
-//				} else {
-//					
-//				}
+				
 				RentDTO rDTO = rentDao.findByBCode(strBCode);
-//				if(rentDTO.getRent_bcode() != null) {
 				if(rDTO != null) {
 					System.out.println("빌려간 도서코드 입니다");
 					break;
@@ -185,6 +187,59 @@ public class RentServiceV2 extends RentServiceV1{
 				break;
 			}
 
+		}
+//		String rent_due_date = "2019-10-30";
+//		String rent_date = "2019-10-31";
+//		
+//		// 반납예정일 < 반납일 : 포인트 0
+//		// 반납예정일 >= 반납일 : 포인트 5
+//		
+//		int diff = rent_date.compareTo(rent_due_date);
+//		System.out.println(diff);
+//		// 1이 나오면 ,, 날짜가 같으면 0
+//		if(diff > 0) { // 1 이상이면 지연
+//			
+//			// 반납일 이후에 반납하기
+//			System.out.println("지연반납");
+//		} else { // 0이거나 -1이면 정상
+//			// 정상반납
+//			System.out.println("정상반납");
+//		}
+		while(true) {
+//			System.out.println("기간 내 반납 시 5포인트 적립");
+			Date date = new Date();
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+			String strCurDate = sf.format(date);
+			String rent_date = strCurDate;
+			
+			// 현재(시스템 날짜) 에서 14일 후 날짜 구하기
+			// 1.7 이하에서
+//			Calendar calendar = new Calendar();
+			
+			// 1.8 이상
+			// TODO 반납예정일
+			
+			LocalDate localDate = LocalDate.now();
+			localDate = localDate.plusDays(14);
+			strCurDate = localDate.toString();
+			String rent_due_date = strCurDate;
+			
+			int diff = rent_date.compareTo(rent_due_date);
+			
+			if(diff > 0) {
+				// 1 이상이면 반납일 이후에 반납, 지연반납
+				System.out.println("지연반납 diff" + diff);
+				System.out.println("지연반납");
+			} else {
+				// 0이거나 0보다 작으면 기간 내 반납, 정상반납
+				System.out.println("정상반납 diff" + diff);
+				System.out.println("정상반납");
+				int point = rentDTO.getRent_point();
+				point += 5;
+				rentDTO.setRent_point(point);
+			}
+			
+			break;
 		}
 		int ret = rentDao.update(rentDTO);
 		if(ret > 0)System.out.println("대출 정보 수정 완료");

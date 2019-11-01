@@ -39,7 +39,7 @@
 			RENT_RETUR_YN,
 			RENT_POINT
 		FROM tbl_rent_book
-		WHERE RENT_BCODE = #{rent_bcode}
+		WHERE RENT_BCODE = #{rent_bcode} AND RENT_RETUR_YN = 'N'
  	
  	</select>
  	
@@ -65,6 +65,7 @@
  	</insert>
  	<update id="update" parameterType="RentDTO">
  		UPDATE tbl_rent_book SET
+					RENT_POINT = #{rent_point},
  				RENT_RETUR_YN = #{rent_retur_yn}
  		WHERE RENT_SEQ = #{rent_seq}
  		
