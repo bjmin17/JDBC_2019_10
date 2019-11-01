@@ -89,8 +89,9 @@ public class RentServiceV2 extends RentServiceV1{
 //				} else {
 //					
 //				}
-				
-				if(rentDTO.getRent_bcode() == null) {
+				RentDTO rDTO = rentDao.findByBCode(strBCode);
+//				if(rentDTO.getRent_bcode() != null) {
+				if(rDTO != null) {
 					System.out.println("빌려간 도서코드 입니다");
 					break;
 				}
@@ -113,7 +114,11 @@ public class RentServiceV2 extends RentServiceV1{
 			break;
 		}
 //		if(rentDTO.getRent_bcode().isEmpty()) return;
-		if(rentDTO.getRent_bcode().isEmpty()) return;
+		if(rentDTO.getRent_bcode() == null) return;
+		if(rentDTO.getRent_bcode().isEmpty()) {
+			return;
+		}
+//		} else if(rentDTO.getRent_bcode() == null) return;
 		
 		while(true) {
 			System.out.print("빌릴 회원의 이름 검색(-Q:quit) >> ");
