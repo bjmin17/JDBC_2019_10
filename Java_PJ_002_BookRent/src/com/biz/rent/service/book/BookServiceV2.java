@@ -3,9 +3,13 @@ package com.biz.rent.service.book;
 import java.util.List;
 
 import com.biz.rent.persistence.BookDTO;
+import com.biz.rent.persistence.RentDTO;
+import com.biz.rent.service.rent.RentServiceV2;
 
 public class BookServiceV2 extends BookServiceV1{
 
+	RentServiceV2 rentService = new RentServiceV2();
+	
 	@Override
 	protected void insert() {
 		// TODO 등록
@@ -152,6 +156,21 @@ public class BookServiceV2 extends BookServiceV1{
 			}
 			
 			System.out.println("대여료 등록 완료");
+			break;
+		}
+		
+		while(true) {
+			System.out.println("도서 대여여부");
+			RentDTO rentDTO = rentDao.findByBCode(bookDTO.getB_code());
+			if(rentDTO == null) {
+				System.out.println("도서코드가 존재하지 않음");
+				continue;
+			}
+			if(rentDTO.getRent_retur_yn() == null) {
+				System.out.println("대출중인 도서입니다");
+				break;
+			}
+				
 			break;
 		}
 		int ret = bookDao.insert(bookDTO);

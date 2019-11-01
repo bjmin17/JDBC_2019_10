@@ -5,16 +5,18 @@ import java.util.Scanner;
 
 import com.biz.rent.config.DBConnection;
 import com.biz.rent.dao.BookDao;
+import com.biz.rent.dao.RentDao;
 import com.biz.rent.persistence.BookDTO;
 
 public class BookServiceV1 {
 
 	protected BookDao bookDao;
+	protected RentDao rentDao;
 	Scanner scanner;
 	
 	public BookServiceV1() {
 		bookDao = DBConnection.getSqlSessionFactory().openSession(true).getMapper(BookDao.class);
-		
+		rentDao = DBConnection.getSqlSessionFactory().openSession(true).getMapper(RentDao.class);
 		scanner = new Scanner(System.in);
 	}
 	public void BookMenu() {
