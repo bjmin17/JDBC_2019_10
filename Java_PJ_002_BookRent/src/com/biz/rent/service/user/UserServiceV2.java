@@ -70,6 +70,10 @@ public class UserServiceV2 extends UserServiceV1{
 			System.out.print("등록할 회원명 입력(-Q:quit) >> ");
 			String strUName = scanner.nextLine();
 			if(strUName.equals("-Q")) break;
+			if(strUName.trim().isEmpty()) {
+				System.out.println("회원명은 반드시 입력");
+				continue;
+			}
 			
 			List<UserDTO> userList = userDao.findByNameSearch(strUName);
 			if(userList != null & userList.size() > 0) {

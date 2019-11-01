@@ -122,11 +122,11 @@ public class MemoServiceV1 {
 		System.out.println("==================================");
 		System.out.println("일련번호\t작성자\t작성일자\t제목\t사진파일");
 		System.out.println("----------------------------------");
-		System.out.println("YYYY-MM-DD");
-		System.out.print("찾고자 하는 시작 작성일자 검색 >> ");
+		System.out.println("");
+		System.out.print("찾고자 하는 시작 작성일자(YYYY-MM-DD) 검색 >> ");
 		String strSDate = scanner.nextLine();
 		
-		System.out.print("찾고자 하는 끝 작성일자 검색 >> ");
+		System.out.print("찾고자 하는 끝 작성일자(YYYY-MM-DD) 검색 >> ");
 		String strEDate = scanner.nextLine();
 		
 		List<MemoDTO> memoList = memoDao.findByDate(strSDate, strEDate);

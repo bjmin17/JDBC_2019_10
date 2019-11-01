@@ -80,6 +80,10 @@ public class BookServiceV2 extends BookServiceV1{
 			System.out.print("등록할 도서명 입력(-Q:quit) >> ");
 			String strBName = scanner.nextLine();
 			if(strBName.equals("-Q")) break;
+			if(strBName.trim().isEmpty()) {
+				System.out.println("도서명은 반드시 입력");
+				continue;
+			}
 			
 			List<BookDTO> bookList = bookDao.findByNameSearch(strBName);
 			if(bookList != null & bookList.size() > 0) {
@@ -94,6 +98,10 @@ public class BookServiceV2 extends BookServiceV1{
 			System.out.print("등록할 저자 입력(-Q:quit) >> ");
 			String strBAuth = scanner.nextLine();
 			if(strBAuth.equals("-Q")) break;
+			if(strBAuth.trim().isEmpty()) {
+				System.out.println("저자는 반드시 입력");
+				continue;
+			}
 			
 			bookDTO.setB_auther(strBAuth);
 			System.out.println("저자 등록 완료");
@@ -114,6 +122,10 @@ public class BookServiceV2 extends BookServiceV1{
 			System.out.print("등록할 출판연도 입력(-Q:quit) >> ");
 			
 			String strBYear = scanner.nextLine();
+			if(strBYear.trim().isEmpty()) {
+				System.out.println("출판연도는 반드시 입력");
+				continue;
+			}
 			if(strBYear.equals("-Q")) break;
 			if(strBYear.length() != 4) {
 				System.out.println("4글자로 입력");
@@ -151,6 +163,10 @@ public class BookServiceV2 extends BookServiceV1{
 			System.out.print("등록할 대여료 입력(-Q:quit) >> ");
 			String strRPrice= scanner.nextLine();
 			if(strRPrice.equals("-Q")) break;
+			if(strRPrice.trim().isEmpty()) {
+				System.out.println("대여료는 반드시 입력");
+				continue;
+			}
 
 			try {
 				int intRPrice = Integer.valueOf(strRPrice);

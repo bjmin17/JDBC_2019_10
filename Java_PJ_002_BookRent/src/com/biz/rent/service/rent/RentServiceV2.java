@@ -244,9 +244,5 @@ public class RentServiceV2 extends RentServiceV1{
 		int ret = rentDao.update(rentDTO);
 		if(ret > 0)System.out.println("대출 정보 수정 완료");
 		else System.out.println("대출 정보 수정 실패");
-		
-		
-		
-		
 	}
 }
