@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.biz.cbt.dao.CbtDao">
+ 	
+ 	 <select id="getMaxPCode" resultType="String">
+ 		SELECT MAX(cb_pcode) FROM tbl_cbt
+ 	</select>
+ 	<select id="selectAll" resultType="CbtDTO">
+ 		SELECT * FROM tbl_cbt
+ 		ORDER BY CB_PCODE
+ 	</select>
+ 	
+ 	<select id="findById" resultType="CbtDTO">
+ 		SELECT 
+ 				CB_NUM,
+ 				CB_PCODE,
+				CB_PROB,
+				CB_FIR,
+				CB_SEC,
+				CB_THI,
+				CB_FOU,
+				CB_ANS
+		FROM tbl_cbt
+		WHERE CB_PCODE = #{cb_pcode,jdbcType=VARCHAR}
+ 	</select>
+ 	
+ 	<insert id="insert" parameterType="CbtDTO">
+ 		INSERT INTO tbl_cbt(
+			 		CB_NUM,
+			 		CB_PCODE,
+					CB_PROB,
+					CB_FIR,
+					CB_SEC,
+					CB_THI,
+					CB_FOU,
+					CB_ANS)
+		 VALUES (SEQ_CBT.NEXTVAL,
+		 		#{cb_pcode,jdbcType=VARCHAR},
+				#{cb_prob,jdbcType=VARCHAR},
+				#{cb_fir,jdbcType=VARCHAR},
+				#{cb_sec,jdbcType=VARCHAR},
+				#{cb_thi,jdbcType=VARCHAR},
+				#{cb_fou,jdbcType=VARCHAR},
+				#{cb_ans,jdbcType=VARCHAR})	
+ 		
+ 	</insert>
+ 	<update id="update" parameterType="CbtDTO">
+ 		UPDATE tbl_cbt SET
+ 					CB_PCODE = #{cb_pcode,jdbcType=VARCHAR},
+					CB_PROB = #{cb_prob,jdbcType=VARCHAR},
+					CB_FIR = #{cb_fir,jdbcType=VARCHAR},
+					CB_SEC = #{cb_sec,jdbcType=VARCHAR},
+					CB_THI = #{cb_thi,jdbcType=VARCHAR},
+					CB_FOU = #{cb_fou,jdbcType=VARCHAR},
+					CB_ANS = #{cb_ans,jdbcType=VARCHAR}
+					
+		WHERE CB_PCODE = #{cb_pcode,jdbcType=VARCHAR}
+ 	</update>
+ 	<delete id="delete" parameterType="CbtDTO">
+ 		DELETE FROM tbl_cbt
+ 		WHERE CB_PCODE = #{cb_pcode,jdbcType=VARCHAR}
+ 	</delete>
+ 	
+ 
+ 
+</mapper>
