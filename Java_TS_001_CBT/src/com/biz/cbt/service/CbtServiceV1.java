@@ -47,13 +47,14 @@ public class CbtServiceV1 {
 	
 	private void viewToStringList(List<CbtDTO> cbtList) {
 		for(CbtDTO dto : cbtList) {
-			System.out.println(dto.toString());
+			System.out.print(dto.getCb_pcode() +"\t");
+			System.out.println(dto.getCb_prob());
 		}
 	}
 	
 	
 	public void viewMenu() {
-		// TODO 문제 메뉴
+		// TODO 문제 메뉴를 선택하는 부분
 		while(true) {
 			
 			System.out.println("==============================");
@@ -63,10 +64,18 @@ public class CbtServiceV1 {
 			System.out.println("------------------------------");
 			System.out.print("선택 >> ");
 			String strMenu = scanner.nextLine();
-			int intMenu = Integer.valueOf(strMenu);
-			if(intMenu == 0) break;
-			else if(intMenu == 1) this.cbtInsert();
-			else if(intMenu == 2) this.cbtSolve();
+			
+			try {
+				int intMenu = Integer.valueOf(strMenu);
+				if(intMenu == 0) break;
+				else if(intMenu == 1) this.cbtInsert();
+				else if(intMenu == 2) this.cbtSolve();
+				
+			} catch (Exception e) {
+
+				System.out.println("번호를 입력해주세요");
+				continue;
+			}
 			
 		}
 		
@@ -83,12 +92,19 @@ public class CbtServiceV1 {
 			System.out.println("------------------------------");
 			System.out.print("선택 >> ");
 			String strMenu = scanner.nextLine();
-			int intMenu = Integer.valueOf(strMenu);
 			
-			if(intMenu == 0) break;
-			else if(intMenu == 1) this.insert();
-			else if(intMenu == 2) this.update();
-			else if(intMenu == 3) this.delete();
+			try {
+				int intMenu = Integer.valueOf(strMenu);
+				
+				if(intMenu == 0) break;
+				else if(intMenu == 1) this.insert();
+				else if(intMenu == 2) this.update();
+				else if(intMenu == 3) this.delete();
+				
+			} catch (Exception e) {
+				System.out.println("번호를 입력해주세요");
+				continue;
+			}
 		}
 		
 		
@@ -101,14 +117,15 @@ public class CbtServiceV1 {
 		System.out.println("문제등록");
 		System.out.println("=================================");
 		String strStop = "Stop";
+		
+		// 문제 등록 중 문제 코드 작성 부분
 		while(true) {
-			System.out.print("문제코드 작성 (Enter:계속 진행, Q:quit)>> ");
+			System.out.print("문제코드 자동생성 (Enter:계속 진행, Q:quit)>> ");
 			String strPCode = scanner.nextLine();
 			if(strPCode.equals("Q")) {
 				strStop = "Q";
 				break;
 			}
-			
 			String strTMPCode = cbtdao.getMaxPCode();
 			int intPCode = Integer.valueOf(strTMPCode.substring(1));
 			intPCode++;
@@ -118,11 +135,11 @@ public class CbtServiceV1 {
 			System.out.println("생성된 코드 : " + strPCode);
 			cbtDTO.setCb_pcode(strPCode);
 			
-			
 			break;
 		}
 		if(strStop.trim().equals("Q")) return;
-		
+
+		// 문제 등록 중 문제명 작성 부분
 		while(true) {
 			System.out.print("문제입력 (Q:quit)>> ");
 			String strProb = scanner.nextLine();
@@ -136,6 +153,7 @@ public class CbtServiceV1 {
 		}
 		if(strStop.trim().equals("Q")) return;
 		
+		// 문제 등록 중 답안1번 작성 부분
 		while(true) {
 			System.out.print("답안1번 (Q:quit)>> ");
 			String strFir = scanner.nextLine();
@@ -148,7 +166,8 @@ public class CbtServiceV1 {
 			break;
 		}
 		if(strStop.trim().equals("Q")) return;
-		
+
+		// 문제 등록 중 답안2번 작성 부분
 		while(true) {
 			System.out.print("답안2번 (Q:quit)>> ");
 			String strSec = scanner.nextLine();
@@ -162,6 +181,7 @@ public class CbtServiceV1 {
 		}
 		if(strStop.trim().equals("Q")) return;
 		
+		// 문제 등록 중 답안3번 작성 부분
 		while(true) {
 			System.out.print("답안3번 (Q:quit)>> ");
 			String strThi = scanner.nextLine();
@@ -175,6 +195,7 @@ public class CbtServiceV1 {
 		}
 		if(strStop.trim().equals("Q")) return;
 		
+		// 문제 등록 중 답안4번 작성 부분
 		while(true) {
 			System.out.print("답안4번 (Q:quit)>> ");
 			String strFou = scanner.nextLine();
@@ -188,6 +209,7 @@ public class CbtServiceV1 {
 		}
 		if(strStop.trim().equals("Q")) return;
 		
+		// 문제 등록 중 정답 문항 작성 부분
 		while(true) {
 			System.out.print("정답 문항(번호만) (Q:quit)>> ");
 			String strAns = scanner.nextLine();
@@ -208,27 +230,34 @@ public class CbtServiceV1 {
 		if(strStop.trim().equals("Q")) return;
 		
 		int ret = cbtdao.insert(cbtDTO);
-		if(ret > 0 )System.out.println("문제 등록 완료");
+		if(ret > 0 )System.out.println("※ 등록되었습니다.");
 		else System.out.println("문제 등록 실패");
 	}
 	public void update() {
 		//TODO 문제 수정
-		String strStop = "stop";
+		String strStop = "";
 		while(true) {
 			System.out.println("=================================");
 			System.out.println("문제수정");
 			System.out.println("=================================");
-			System.out.println("수정하고 싶은 문제 번호(Enter:전체) >> ");
-			String strSeq = scanner.nextLine();
-			if(strSeq.trim().isEmpty()) {
+			System.out.println("수정하고 싶은 문제 코드(Enter:문제 전체보기) >> ");
+			String strPCode = scanner.nextLine();
+			if(strPCode.trim().isEmpty()) {
+				// 문제 전체를 조회하는 메서드
 				this.viewAll();
+				// 그리고 다시 반복문 시작
 				continue;
-			} else if(strSeq.equals("Q")) {
+			} else if(strPCode.equals("Q")) {
 				strStop = "Q";
 				break;
+			} else if(cbtdao.findById(strPCode.toUpperCase()) == null) {
+				System.out.println("입력한 문제 코드에 일치하는 데이터가 없음");
+				continue;
 			}
-			strSeq = strSeq.toUpperCase();
-			CbtDTO cbtDTO = cbtdao.findById(strSeq);
+			strPCode = strPCode.toUpperCase();
+			
+			// 위에서 입력한 문제코드로, DB에 저장되어 있는 문제를 DTO형식으로 가져온다.
+			CbtDTO cbtDTO = cbtdao.findById(strPCode);
 			System.out.println("=================================");
 			System.out.println("문제수정");
 			System.out.println("=================================");
@@ -319,9 +348,9 @@ public class CbtServiceV1 {
 			if(strStop.trim().equals("Q")) return;
 			
 			int ret = cbtdao.update(cbtDTO);
-			if(ret > 0 )System.out.println("문제 수정 완료");
+			if(ret > 0 )System.out.println("※ 수정되었습니다.");
 			else System.out.println("문제 수정 실패");
-				
+			break;
 		}
 		
 			
@@ -332,9 +361,9 @@ public class CbtServiceV1 {
 		while(true) {
 			
 			System.out.println("=================================");
-			System.out.println("문제수정");
+			System.out.println("문제삭제");
 			System.out.println("=================================");
-			System.out.print("수정하고 싶은 문제 코드(Enter:전체) >> ");
+			System.out.print("삭제하고 싶은 문제 코드(Enter:문제 전체보기) >> ");
 			String strPCode = scanner.nextLine();
 			strPCode = strPCode.toUpperCase();
 			if(strPCode.trim().isEmpty()) {
@@ -345,11 +374,11 @@ public class CbtServiceV1 {
 				continue;
 			}
 			
-			System.out.println("정말 삭제하시겠습니까?(Y/N,,Enter:Yes)");
+			System.out.println("정말 삭제하시겠습니까?(Enter:Yes, 아니면 아무키나 입력)");
 			String strYesNo = scanner.nextLine();
 			if(strYesNo.trim().isEmpty()) {
 				int ret = cbtdao.delete(strPCode);
-				if(ret > 0 )System.out.println("문제 삭제 완료");
+				if(ret > 0 )System.out.println("※ 삭제되었습니다");
 				else System.out.println("문제 삭제 실패");
 				break;
 			}
